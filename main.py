@@ -1,7 +1,8 @@
 import os
 from dotenv import load_dotenv
 from langchain.llms import OpenAI
-from langchain.prompts import PromptTemplate
+from langchain.chains import LLMChain
+from langchain.schema import StrOutputParser
 
 load_dotenv()
 
@@ -15,6 +16,12 @@ Respond using cockney rhyming slang.
 
 Tell me about the following fruit: {fruit}
 """
+
+llm_chain = LLMChain(
+    llm=llm,
+    prompt=template,
+    output_parser=StrOutputParser()
+)
 
 response = llm(template.format(fruit="apple"))
 
